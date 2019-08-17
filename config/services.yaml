@@ -7,6 +7,10 @@ services:
     security.acl.permission.map:
         class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap
 
+    mailer:
+        alias: fos_user.mailer.noop
+        public: true
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

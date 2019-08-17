@@ -9,3 +9,6 @@ sonata_user:
       class:    Sonata\UserBundle\Admin\Model\UserAdmin
     group:
       class:    Sonata\UserBundle\Admin\Model\GroupAdmin
+
+  #Mailer config
+  mailer: fos_user.mailer.noop
