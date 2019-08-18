@@ -1,10 +1,15 @@
 acl:
     connection: default
+
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: md5
+        App\Entity\User:
+            algorithm: bcrypt
     providers:
-        in_memory: { memory: null }
+        user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
         fos_userbundle:
             id: fos_user.user_provider.username
 
@@ -12,20 +17,27 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        #User firewall
         main:
             pattern:             .*
             context:             user
             form_login:
-                provider:       fos_userbundle
-                login_path:     /login
+                login_path: /login
+                check_path: /login
+                provider: user_provider
                 use_forward:    false
-                check_path:     /login_check
                 failure_path:   null
             logout:             true
             anonymous:          true
 
+
         #Admin firewall
         admin:
+            provider: user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
             pattern:            /admin(.*)
             context:            user
             form_login:
@@ -73,6 +85,9 @@ security:
         # AsseticBundle paths used when using the controller for assets
         - { path: ^/js/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/css/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        #Login
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Admin login page needs to be accessed without credential
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
