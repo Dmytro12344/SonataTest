@@ -3,8 +3,7 @@ acl:
 
 security:
     encoders:
-        App\Entity\User:
-            algorithm: bcrypt
+        FOS\UserBundle\Model\UserInterface: sha512
     providers:
         user_provider:
             entity:
@@ -30,6 +29,10 @@ security:
                 failure_path:   null
             logout:             true
             anonymous:          true
+            provider: user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
 
 
         #Admin firewall

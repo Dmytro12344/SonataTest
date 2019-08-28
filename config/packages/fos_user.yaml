@@ -1,7 +1,7 @@
 fos_user:
   db_driver: orm
   firewall_name: main
-  user_class: App\Entity\User
+  user_class: Sonata\UserBundle\Entity\BaseUser
   registration:
     confirmation:
       enabled: false
@@ -12,6 +12,6 @@ fos_user:
     user_manager: sonata.user.orm.user_manager
     mailer: 'fos_user.mailer.noop'
   group:
-    group_class:   App\Entity\Group
+    group_class:   Sonata\UserBundle\Entity\BaseGroup
     group_manager: sonata.user.orm.group_manager
 
